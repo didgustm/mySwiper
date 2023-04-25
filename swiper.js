@@ -108,40 +108,42 @@
         }
 
         // mobile check
-        const mobileKeyWords = ['iPhone', 'iPod', 'BlackBerry', 'Android', 'Windows CE', 'LG', 'MOT', 'SAMSUNG', 'SonyEricsson'];
-        const mobileCheck = mobileKeyWords.filter(el => navigator.userAgent.match(el));
-        mobileCheck.length < 1? this._dragEvents(): this._touchEvents();
+        // const mobileKeyWords = ['iPhone', 'iPod', 'BlackBerry', 'Android', 'Windows CE', 'LG', 'MOT', 'SAMSUNG', 'SonyEricsson'];
+        // const mobileCheck = mobileKeyWords.filter(el => navigator.userAgent.match(el));
+        // mobileCheck.length < 1? this._dragEvents(): this._touchEvents();
+        this._dragEvents();
     }
 
     // drag event
     Swipe.prototype._dragEvents = function(){
         this.swiper.addEventListener('pointerdown', e => this.swipeStart(e));
-        document.addEventListener('pointermove', e => this.swipeMove(e));
-        document.addEventListener('pointerup', () => this.swipeEnd());
+        this.swiper.addEventListener('pointermove', e => this.swipeMove(e));
+        this.swiper.addEventListener('pointerup', () => this.swipeEnd());
     }
 
     // touch event
-    Swipe.prototype._touchEvents = function(){
-        this.swiper.addEventListener('touchstart', e => this.swipeStart(e));
-        document.addEventListener('touchmove', e => this.swipeMove(e));
-        document.addEventListener('touchend', () => this.swipeEnd());
-    }
+    // Swipe.prototype._touchEvents = function(){
+    //     this.swiper.addEventListener('touchstart', e => this.swipeStart(e));
+    //     document.addEventListener('touchmove', e => this.swipeMove(e));
+    //     document.addEventListener('touchend', () => this.swipeEnd());
+    // }
 
     // functions
     Swipe.prototype.swipeStart = function(e){
+        this.swiper.setPointerCapture(e.pointerId)
         if(!this.animating){
             e.preventDefault();
-            e.stopPropagation();
-            this.dragStartPoint = (e.screenX || e.touches[0].screenX) - (this.posx + this.w/2);
+            this.dragStartPoint = e.x - (this.posx + this.w/2);
+            this.movePoint = 0;
             this.dragStart = true;
         }
     }
 
     Swipe.prototype.swipeMove = function(e){
         if(this.dragStart && !this.animating){
-            this.movePoint = this.dragStartPoint - ((e.screenX || e.touches[0].screenX) - (this.posx + this.w/2));
+            this.movePoint = this.dragStartPoint - (e.x - (this.posx + this.w/2));
             const count = -this.step * this.num - this.movePoint;
-            this.translateTo(count, 0)
+            this.translateTo(count, 0);
         }
     }
 

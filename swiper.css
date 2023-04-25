@@ -14,5 +14,6 @@
     position:relative;
     flex-shrink:0;
     overflow:hidden;
+    touch-action:none;
     z-index:10
 }
