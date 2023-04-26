@@ -17,3 +17,6 @@
     touch-action:none;
     z-index:10
 }
+.swiper-item a{
+    user-select:none
+}

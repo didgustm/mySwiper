@@ -47,7 +47,7 @@
         wrap: '.swiper',
         loop: false,
         speed: 800,
-        delay: 300,
+        delay: 3000,
         gap: 0,
         touchGap: 100,
         pagination: null,
@@ -106,11 +106,7 @@
         if(this.options.autoplay){
             this.autoplay();
         }
-
-        // mobile check
-        // const mobileKeyWords = ['iPhone', 'iPod', 'BlackBerry', 'Android', 'Windows CE', 'LG', 'MOT', 'SAMSUNG', 'SonyEricsson'];
-        // const mobileCheck = mobileKeyWords.filter(el => navigator.userAgent.match(el));
-        // mobileCheck.length < 1? this._dragEvents(): this._touchEvents();
+        
         this._dragEvents();
     }
 
@@ -120,13 +116,6 @@
         this.swiper.addEventListener('pointermove', e => this.swipeMove(e));
         this.swiper.addEventListener('pointerup', () => this.swipeEnd());
     }
-
-    // touch event
-    // Swipe.prototype._touchEvents = function(){
-    //     this.swiper.addEventListener('touchstart', e => this.swipeStart(e));
-    //     document.addEventListener('touchmove', e => this.swipeMove(e));
-    //     document.addEventListener('touchend', () => this.swipeEnd());
-    // }
 
     // functions
     Swipe.prototype.swipeStart = function(e){
@@ -148,57 +137,44 @@
     }
 
     Swipe.prototype.swipeEnd = function(){
-        if(this.dragStart){
-            this.dragStart = false;
-            this.animating = true;
+        this.dragStart = false;
+        this.animating = true;
 
-            // loop next end
-            if(this.options.loop && this.movePoint > this.options.touchGap && this.num >= this.length - 2){
+        if(this.movePoint > this.options.touchGap){
+            if(this.num >= this.length - 2){
                 this.num++;
                 this.realNum = 0;
                 setTimeout(() => {
                     this.num = 1;
                     this.translateTo(-this.step * this.num, 0);
                 }, this.options.speed)
+            } else{
+                this.realNum++;
+                this.num++;
             }
-            // loop prev end
-            else if(this.options.loop && this.movePoint < -this.options.touchGap && this.num <= 1){
+        } else if(this.movePoint < -this.options.touchGap){
+            if(this.num <= 1){
                 this.num--;
                 this.realNum = this.length - 3;
                 setTimeout(() => {
                     this.num = this.length - 2;
                     this.translateTo(-this.step * this.num, 0);
                 }, this.options.speed)
+            } else{
+                this.realNum--;
+                this.num--;
             }
-
-            else {
-                // next
-                if(this.movePoint > this.options.touchGap && this.num < this.length - 1) {
-                    this.realNum++;
-                    this.num++;
-                }
-                // prev
-                else if(this.movePoint < -this.options.touchGap && this.num > 0) {
-                    this.realNum--;
-                    this.num--;
-                }
-                // hold
-                else {
-                    this.realNum;
-                    this.num;
-                };
-            }
-
-            // animation
-            const count = -this.step * this.num;
-            this.translateTo(count, this.options.speed);
-
-            // forbid event
-            setTimeout(() => {
-                this.forbidMove()
-            }, this.options.speed)
-            
         }
+
+        // animation
+        const count = -this.step * this.num;
+        this.translateTo(count, this.options.speed);
+
+        // forbid event
+        setTimeout(() => {
+            this.forbidMove()
+        }, this.options.speed)
+            
     }
 
     Swipe.prototype.forbidMove = function(){
@@ -301,7 +277,7 @@
 
         var timer = setInterval(() => {
             this.slideNext();
-        }, 3000);
+        }, this.options.delay);
 
     }
 
