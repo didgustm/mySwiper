@@ -35,37 +35,39 @@
             line-height:500px
         }
         .item01{
-            background:goldenrod
+            background:#782fff
         }
         .item02{
-            background:cadetblue
+            background:#0066ff
         }
         .item03{
-            background:dodgerblue
+            background:#ff662a
         }
         .item04{
-            background:wheat
+            background:#ffa200
         }
         .item05{
-            background:teal
+            background:#00bcbb
         }
-        .swiper-item a{
-            display:block;
+        .swiper-item p{
+            display:flex;
+            justify-content:center;
+            align-items:center;
             width:100%;
             height:100%
         }
         .controls button{
             position:absolute;
-            top:50%;
+            bottom:0;
             font-size:20px;
             transform:translateY(-50%);
             z-index:20;
         }
         .prev{
-            left:-100px
+            left:0
         }
         .next{
-            right:-100px
+            right:0
         }
 
         .paginations{
@@ -77,11 +79,14 @@
             width:15px;
             height:15px;
             border-radius:50%;
-            background:#d6d6d6;
-            margin:10px
+            background:#373737;
+            margin:10px;
+            font-size:0;
+            text-indent:-999px;
+            opacity:0.5
         }
         .paginations .active{
-            background:#782fff
+            opacity:1
         }
         
     </style>
@@ -93,11 +98,11 @@
 
         <div class="swiper">
             <div class="swiper-wrap">
-                <div class="swiper-item item01"><a href="/">1</a></div>
-                <div class="swiper-item item02"><a href="/">2</a></div>
-                <div class="swiper-item item03"><a href="/">3</a></div>
-                <div class="swiper-item item04"><a href="/">4</a></div>
-                <div class="swiper-item item05"><a href="/">5</a></div>
+                <div class="swiper-item item01"><p href="/">1</p></div>
+                <div class="swiper-item item02"><p href="/">2</p></div>
+                <div class="swiper-item item03"><p href="/">3</p></div>
+                <div class="swiper-item item04"><p href="/">4</p></div>
+                <div class="swiper-item item05"><p href="/">5</p></div>
             </div>
         </div>
 
@@ -107,11 +112,11 @@
         </div>
 
         <div class="paginations">
-            <button type="button" class="active"></button>
-            <button type="button" class=""></button>
-            <button type="button" class=""></button>
-            <button type="button" class=""></button>
-            <button type="button" class=""></button>
+            <button type="button" class="active">1</button>
+            <button type="button">2</button>
+            <button type="button">3</button>
+            <button type="button">4</button>
+            <button type="button">5</button>
         </div>
 
     </div>
